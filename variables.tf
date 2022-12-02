@@ -1,6 +1,6 @@
 variable "certificate_permissions" {
-  type=list(string)
-  default= [
+  type = list(string)
+  default = [
     "Get",
     "List",
     "Update",
@@ -16,12 +16,12 @@ variable "certificate_permissions" {
     "ListIssuers",
     "SetIssuers",
     "DeleteIssuers",
-  ] 
+  ]
 }
 
- variable key_permissions {
- type=list(string)
- default= [
+variable "key_permissions" {
+  type = list(string)
+  default = [
     "Get",
     "List",
     "Update",
@@ -38,7 +38,7 @@ variable "certificate_permissions" {
 }
 
 variable "secret_permissions" {
-  type=list(string)
+  type = list(string)
   default = [
     "Get",
     "List",
@@ -51,12 +51,22 @@ variable "secret_permissions" {
 }
 
 variable "key_name" {
-  type=string
+  type = string
 }
 variable "tenant_id" {
-  type=string
+  type = string
 }
 
 variable "tags" {
-  type=map
+  type = map(any)
+}
+
+variable "key_vault" {
+  type = object({
+    name                       = string
+    location                   = string
+    resource_group_name        = string
+    sku_name                   = string
+    soft_delete_retention_days = number
+  })
 }

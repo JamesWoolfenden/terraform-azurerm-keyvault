@@ -15,9 +15,6 @@ repos:
       - id: pretty-format-json
         args:
           - --autofix
-      - id: detect-aws-credentials
-        args:
-          - --allow-missing-credentials
       - id: detect-private-key
   - repo: https://github.com/Lucas-C/pre-commit-hooks
     rev: v1.3.1
@@ -34,6 +31,15 @@ repos:
     rev: v0.32.2
     hooks:
       - id: markdownlint
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.28.0
+    hooks:
+      - id: yamllint
+        name: yamllint
+        description: This hook runs yamllint.
+        entry: yamllint
+        language: python
+        types: [file, yaml]
   - repo: https://github.com/jameswoolfenden/pre-commit
     rev: v0.1.50
     hooks:
@@ -42,13 +48,13 @@ repos:
       - id: tf2docs
         language_version: python3.8
   - repo: https://github.com/bridgecrewio/checkov
-    rev: 2.2.86
+    rev: 2.2.106
     hooks:
       - id: checkov
         verbose: true
         entry: checkov -d example/examplea --external-checks-dir checkov --download-external-modules true
   - repo: https://github.com/jameswoolfenden/pike
-    rev: v0.2.26
+    rev: v0.2.35
     hooks:
       - id: pike-docs-go
-        args: ["readme","-d", ".", "-i"]
+        args: ["readme", "-i", "-d", "."]

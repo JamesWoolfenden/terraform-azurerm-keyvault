@@ -3,9 +3,9 @@ output "key_vault" {
 }
 
 output "policy" {
-  value=azurerm_key_vault_access_policy.pike
+  value = azurerm_key_vault_access_policy.pike
 }
 
 output "key" {
-    value=azurerm_key_vault_key.pike
+  value = azurerm_key_vault_key.pike
 }
