@@ -43,6 +43,7 @@ No requirements.
 | Name | Version |
 |------|---------|
 | <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | n/a |
+| <a name="provider_random"></a> [random](#provider\_random) | n/a |
 
 ## Modules
 
@@ -52,26 +53,32 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [azurerm_container_registry.example](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/container_registry) | resource |
+| [azurerm_key_vault.example](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/key_vault) | resource |
+| [azurerm_key_vault_access_policy.pike](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/key_vault_access_policy) | resource |
+| [azurerm_key_vault_key.pike](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/key_vault_key) | resource |
+| [random_uuid.test](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/uuid) | resource |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_acr"></a> [acr](#input\_acr) | n/a | <pre>object({<br>    name                = string,<br>    resource_group_name = string<br>    location            = string<br>    sku                 = string<br>  })</pre> | n/a | yes |
-| <a name="input_anonymous_pull"></a> [anonymous\_pull](#input\_anonymous\_pull) | n/a | `bool` | `false` | no |
-| <a name="input_encryption"></a> [encryption](#input\_encryption) | n/a | <pre>object({<br>    enabled            = bool<br>    key_vault_key_id   = string<br>    identity_client_id = string<br>  })</pre> | n/a | yes |
-| <a name="input_public_network_access"></a> [public\_network\_access](#input\_public\_network\_access) | n/a | `bool` | `false` | no |
-| <a name="input_quarantine_policy"></a> [quarantine\_policy](#input\_quarantine\_policy) | n/a | `bool` | `true` | no |
-| <a name="input_replications"></a> [replications](#input\_replications) | n/a | <pre>list(object({<br>    location                  = string<br>    regional_endpoint_enabled = bool<br>    zone_redundancy_enabled   = bool<br>    tags                      = map(string)<br>  }))</pre> | n/a | yes |
-| <a name="input_retention_policy"></a> [retention\_policy](#input\_retention\_policy) | n/a | `bool` | `true` | no |
-| <a name="input_trust_policy"></a> [trust\_policy](#input\_trust\_policy) | n/a | `bool` | `true` | no |
+| <a name="input_certificate_permissions"></a> [certificate\_permissions](#input\_certificate\_permissions) | n/a | `list(string)` | <pre>[<br>  "Get",<br>  "List",<br>  "Update",<br>  "Create",<br>  "Import",<br>  "Delete",<br>  "Recover",<br>  "Backup",<br>  "Restore",<br>  "ManageContacts",<br>  "ManageIssuers",<br>  "GetIssuers",<br>  "ListIssuers",<br>  "SetIssuers",<br>  "DeleteIssuers"<br>]</pre> | no |
+| <a name="input_expiration_date"></a> [expiration\_date](#input\_expiration\_date) | n/a | `string` | n/a | yes |
+| <a name="input_key_name"></a> [key\_name](#input\_key\_name) | n/a | `string` | n/a | yes |
+| <a name="input_key_opts"></a> [key\_opts](#input\_key\_opts) | n/a | `list(string)` | <pre>[<br>  "decrypt",<br>  "encrypt",<br>  "sign",<br>  "unwrapKey",<br>  "verify",<br>  "wrapKey"<br>]</pre> | no |
+| <a name="input_key_permissions"></a> [key\_permissions](#input\_key\_permissions) | n/a | `list(string)` | <pre>[<br>  "Get",<br>  "List",<br>  "Update",<br>  "Create",<br>  "Import",<br>  "Delete",<br>  "Recover",<br>  "Backup",<br>  "Restore",<br>  "GetRotationPolicy",<br>  "SetRotationPolicy",<br>  "Rotate"<br>]</pre> | no |
+| <a name="input_key_vault"></a> [key\_vault](#input\_key\_vault) | n/a | <pre>object({<br>    name                       = string<br>    location                   = string<br>    resource_group_name        = string<br>    sku_name                   = string<br>    soft_delete_retention_days = number<br>  })</pre> | n/a | yes |
+| <a name="input_secret_permissions"></a> [secret\_permissions](#input\_secret\_permissions) | n/a | `list(string)` | <pre>[<br>  "Get",<br>  "List",<br>  "Set",<br>  "Delete",<br>  "Recover",<br>  "Backup",<br>  "Restore"<br>]</pre> | no |
+| <a name="input_tags"></a> [tags](#input\_tags) | n/a | `map(any)` | n/a | yes |
+| <a name="input_tenant_id"></a> [tenant\_id](#input\_tenant\_id) | n/a | `string` | n/a | yes |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| <a name="output_registry"></a> [registry](#output\_registry) | n/a |
+| <a name="output_key"></a> [key](#output\_key) | n/a |
+| <a name="output_key_vault"></a> [key\_vault](#output\_key\_vault) | n/a |
+| <a name="output_policy"></a> [policy](#output\_policy) | n/a |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 ## Policy
@@ -134,7 +141,7 @@ Please use the [issue tracker](https://github.com/JamesWoolfenden/terraform-azur
 
 ## Copyrights
 
-Copyright © 2022 James Woolfenden
+Copyright 2022 James Woolfenden
 
 ## License
 
