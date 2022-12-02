@@ -90,10 +90,10 @@ resource "azurerm_role_definition" "terraform_pike" {
 
   permissions {
     actions = [
-    "Microsoft.ContainerRegistry/registries/delete",
-    "Microsoft.ContainerRegistry/registries/operationStatuses/read",
-    "Microsoft.ContainerRegistry/registries/read",
-    "Microsoft.ContainerRegistry/registries/write",
+    "Microsoft.KeyVault/locations/deletedVaults/read",
+    "Microsoft.KeyVault/vaults/delete",
+    "Microsoft.KeyVault/vaults/read",
+    "Microsoft.KeyVault/vaults/write",
     "Microsoft.Resources/subscriptions/resourcegroups/read"]
     not_actions = []
   }
