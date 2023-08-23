@@ -2,7 +2,7 @@
 
 With Secure Defaults from Checkov
 
-[![Build Status](https://github.com/JamesWoolfenden/terraform-azurerm-keyvault/workflows/Verify%20and%20Bump/badge.svg?branch=master)](https://github.com/JamesWoolfenden/terraform-azurerm-keyvault)
+[![Build Status](https://github.com/JamesWoolfenden/terraform-azurerm-keyvault/workflows/Verify/badge.svg?branch=master)](https://github.com/JamesWoolfenden/terraform-azurerm-keyvault)
 [![Latest Release](https://img.shields.io/github/release/JamesWoolfenden/terraform-azurerm-keyvault.svg)](https://github.com/JamesWoolfenden/terraform-azurerm-keyvault/releases/latest)
 [![GitHub tag (latest SemVer)](https://img.shields.io/github/tag/JamesWoolfenden/terraform-azurerm-keyvault.svg?label=latest)](https://github.com/JamesWoolfenden/terraform-azurerm-keyvault/releases/latest)
 ![Terraform Version](https://img.shields.io/badge/tf-%3E%3D0.14.0-blue.svg)
@@ -20,8 +20,6 @@ It's 100% Open Source and licensed under the [APACHE2](LICENSE).
 ## Usage
 
 This is a very basic example.
-
-![alt text](./diagram/message_queue.png)
 
 Include **module.acr.tf** this repository as a module in your existing Terraform code:
 
@@ -47,7 +45,9 @@ No requirements.
 
 ## Modules
 
-No modules.
+| Name | Source | Version |
+|------|--------|---------|
+| <a name="module_private-endpoint"></a> [private-endpoint](#module\_private-endpoint) | git::https://github.com/JamesWoolfenden/terraform-azurerm-private-endpoint.git | dd10f838be3d99a3b6682afba406c73ee0c90989 |
 
 ## Resources
 
@@ -56,18 +56,23 @@ No modules.
 | [azurerm_key_vault.example](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/key_vault) | resource |
 | [azurerm_key_vault_access_policy.pike](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/key_vault_access_policy) | resource |
 | [azurerm_key_vault_key.pike](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/key_vault_key) | resource |
+| [azurerm_resource_group.example](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) | resource |
+| [azurerm_subnet.endpoint](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subnet) | resource |
+| [azurerm_virtual_network.example](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network) | resource |
 | [random_uuid.test](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/uuid) | resource |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_allowed_ips"></a> [allowed\_ips](#input\_allowed\_ips) | n/a | `list(string)` | n/a | yes |
 | <a name="input_certificate_permissions"></a> [certificate\_permissions](#input\_certificate\_permissions) | n/a | `list(string)` | <pre>[<br>  "Get",<br>  "List",<br>  "Update",<br>  "Create",<br>  "Import",<br>  "Delete",<br>  "Recover",<br>  "Backup",<br>  "Restore",<br>  "ManageContacts",<br>  "ManageIssuers",<br>  "GetIssuers",<br>  "ListIssuers",<br>  "SetIssuers",<br>  "DeleteIssuers"<br>]</pre> | no |
 | <a name="input_expiration_date"></a> [expiration\_date](#input\_expiration\_date) | n/a | `string` | n/a | yes |
 | <a name="input_key_name"></a> [key\_name](#input\_key\_name) | n/a | `string` | n/a | yes |
 | <a name="input_key_opts"></a> [key\_opts](#input\_key\_opts) | n/a | `list(string)` | <pre>[<br>  "decrypt",<br>  "encrypt",<br>  "sign",<br>  "unwrapKey",<br>  "verify",<br>  "wrapKey"<br>]</pre> | no |
 | <a name="input_key_permissions"></a> [key\_permissions](#input\_key\_permissions) | n/a | `list(string)` | <pre>[<br>  "Get",<br>  "List",<br>  "Update",<br>  "Create",<br>  "Import",<br>  "Delete",<br>  "Recover",<br>  "Backup",<br>  "Restore",<br>  "GetRotationPolicy",<br>  "SetRotationPolicy",<br>  "Rotate"<br>]</pre> | no |
 | <a name="input_key_vault"></a> [key\_vault](#input\_key\_vault) | n/a | <pre>object({<br>    name                       = string<br>    location                   = string<br>    resource_group_name        = string<br>    sku_name                   = string<br>    soft_delete_retention_days = number<br>  })</pre> | n/a | yes |
+| <a name="input_public_network_access"></a> [public\_network\_access](#input\_public\_network\_access) | n/a | `bool` | `true` | no |
 | <a name="input_secret_permissions"></a> [secret\_permissions](#input\_secret\_permissions) | n/a | `list(string)` | <pre>[<br>  "Get",<br>  "List",<br>  "Set",<br>  "Delete",<br>  "Recover",<br>  "Backup",<br>  "Restore"<br>]</pre> | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | n/a | `map(any)` | n/a | yes |
 | <a name="input_tenant_id"></a> [tenant\_id](#input\_tenant\_id) | n/a | `string` | n/a | yes |
@@ -97,11 +102,26 @@ resource "azurerm_role_definition" "terraform_pike" {
 
   permissions {
     actions = [
+    "Microsoft.Cache/redis/PrivateEndpointConnectionsApproval/action",
     "Microsoft.KeyVault/locations/deletedVaults/read",
+    "Microsoft.KeyVault/vaults/accessPolicies/write",
     "Microsoft.KeyVault/vaults/delete",
     "Microsoft.KeyVault/vaults/read",
     "Microsoft.KeyVault/vaults/write",
-    "Microsoft.Resources/subscriptions/resourcegroups/read"]
+    "Microsoft.Network/privateEndpoints/delete",
+    "Microsoft.Network/privateEndpoints/read",
+    "Microsoft.Network/privateEndpoints/write",
+    "Microsoft.Network/virtualNetworks/delete",
+    "Microsoft.Network/virtualNetworks/read",
+    "Microsoft.Network/virtualNetworks/subnets/delete",
+    "Microsoft.Network/virtualNetworks/subnets/join/action",
+    "Microsoft.Network/virtualNetworks/subnets/read",
+    "Microsoft.Network/virtualNetworks/subnets/write",
+    "Microsoft.Network/virtualNetworks/write",
+    "Microsoft.Resources/subscriptions/providers/read",
+    "Microsoft.Resources/subscriptions/resourcegroups/delete",
+    "Microsoft.Resources/subscriptions/resourcegroups/read",
+    "Microsoft.Resources/subscriptions/resourcegroups/write"]
     not_actions = []
   }
 
@@ -141,7 +161,7 @@ Please use the [issue tracker](https://github.com/JamesWoolfenden/terraform-azur
 
 ## Copyrights
 
-Copyright 2022 James Woolfenden
+Copyright 2022-23 James Woolfenden
 
 ## License
 

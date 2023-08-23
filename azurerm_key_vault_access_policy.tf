@@ -6,7 +6,5 @@ resource "azurerm_key_vault_access_policy" "pike" {
   key_permissions         = var.key_permissions
   secret_permissions      = var.secret_permissions
 }
-
-
 resource "random_uuid" "test" {
 }

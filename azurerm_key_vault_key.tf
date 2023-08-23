@@ -9,8 +9,6 @@ resource "azurerm_key_vault_key" "pike" {
   key_opts   = var.key_opts
   depends_on = [azurerm_key_vault_access_policy.pike]
 }
-
-
 variable "key_opts" {
   type = list(string)
   default = [
@@ -23,8 +21,6 @@ variable "key_opts" {
   ]
 
 }
-
-
 variable "expiration_date" {
   type = string
 }

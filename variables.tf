@@ -18,7 +18,6 @@ variable "certificate_permissions" {
     "DeleteIssuers",
   ]
 }
-
 variable "key_permissions" {
   type = list(string)
   default = [
@@ -36,7 +35,6 @@ variable "key_permissions" {
     "Rotate",
   ]
 }
-
 variable "secret_permissions" {
   type = list(string)
   default = [
@@ -49,18 +47,15 @@ variable "secret_permissions" {
     "Restore",
   ]
 }
-
 variable "key_name" {
   type = string
 }
 variable "tenant_id" {
   type = string
 }
-
 variable "tags" {
   type = map(any)
 }
-
 variable "key_vault" {
   type = object({
     name                       = string
@@ -69,4 +64,13 @@ variable "key_vault" {
     sku_name                   = string
     soft_delete_retention_days = number
   })
+}
+variable "allowed_ips" {
+  type        = list(string)
+  description = ""
+}
+variable "public_network_access" {
+  type        = bool
+  description = ""
+  default     = true
 }
