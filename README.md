@@ -21,11 +21,11 @@ It's 100% Open Source and licensed under the [APACHE2](LICENSE).
 
 This is a very basic example.
 
-Include **module.acr.tf** this repository as a module in your existing Terraform code:
+Include **module.keyvault.tf** this repository as a module in your existing Terraform code:
 
 ```terraform
-module "acr" {
-  source      = "JamesWoolfenden/acr/azurerm"
+module "keyvault" {
+  source      = "JamesWoolfenden/keyvault/azurerm"
   version     = "v0.1.1"
   acr         = var.acr
 }
